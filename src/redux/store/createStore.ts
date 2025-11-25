@@ -9,6 +9,7 @@ import { logger } from '@showdex/utils/debug';
 import { pkmnApi, showdownApi } from '@showdex/redux/services';
 import { type CalcdexSliceState, calcdexSlice } from './calcdexSlice';
 import { type HellodexSliceState, hellodexSlice } from './hellodexSlice';
+import { type PlayAheadSliceState, playAheadSlice } from './playAheadSlice';
 import { type ShowdexSliceState, showdexSlice } from './showdexSlice';
 import { type TeamdexSliceState, teamdexSlice } from './teamdexSlice';
 
@@ -19,6 +20,7 @@ export interface RootState extends ReturnType<RootStore['getState']> {
   showdex: ShowdexSliceState;
   hellodex: HellodexSliceState;
   calcdex: CalcdexSliceState;
+  playAhead: PlayAheadSliceState;
   teamdex: TeamdexSliceState;
 }
 
@@ -64,6 +66,7 @@ export const createStore = (
       [showdexSlice.name]: showdexSlice.reducer,
       [hellodexSlice.name]: hellodexSlice.reducer,
       [calcdexSlice.name]: calcdexSlice.reducer,
+      [playAheadSlice.name]: playAheadSlice.reducer,
       [teamdexSlice.name]: teamdexSlice.reducer,
     },
 

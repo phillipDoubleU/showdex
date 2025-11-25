@@ -11,3 +11,4 @@ export * from './CalcdexPlayerSide';
 export * from './CalcdexPokemon';
 export * from './CalcdexPokemonAlt';
 export * from './CalcdexPokemonPreset';
+export * from './PlayAheadState';
