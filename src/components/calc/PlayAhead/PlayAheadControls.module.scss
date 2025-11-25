@@ -1,0 +1,119 @@
+@use 'config/colors';
+@use 'config/fonts';
+@use 'functions/color';
+@use 'mixins/flex';
+@use 'mixins/font';
+@use 'mixins/spacing';
+@use 'mixins/transition';
+
+.container {
+  @include flex.column;
+  @include spacing.padding($all: 12px);
+  border-radius: 12px;
+  @include transition.apply(background-color, box-shadow);
+
+  &.light {
+    background-color: color.alpha(colors.$white, 0.48);
+    box-shadow: (
+      0 0 1px color.alpha(colors.$black, 0.12),
+      0 0 12px color.alpha(colors.$gray-dark, 0.12),
+    );
+
+    &.active {
+      background-color: color.alpha(#E3F2FD, 0.64);
+      box-shadow: (
+        0 0 1px color.alpha(#1976D2, 0.24),
+        0 0 16px color.alpha(#1976D2, 0.16),
+      );
+    }
+  }
+
+  &.dark {
+    background-color: color.alpha(colors.$gray-darkest, 0.64);
+    box-shadow: (
+      0 0 1px color.alpha(colors.$white, 0.24),
+      0 0 12px color.alpha(colors.$black, 0.32),
+    );
+
+    &.active {
+      background-color: color.alpha(#0D47A1, 0.32);
+      box-shadow: (
+        0 0 1px color.alpha(#42A5F5, 0.48),
+        0 0 16px color.alpha(#1976D2, 0.32),
+      );
+    }
+  }
+}
+
+.header {
+  @include flex.row-between;
+  @include spacing.margin($bottom: 8px);
+}
+
+.title {
+  @include font.apply(fonts.$primary, (
+    font-size: 14px,
+    font-weight: 600,
+  ));
+  @include transition.apply(color);
+
+  .light & {
+    color: color.alpha(colors.$black, 0.87);
+  }
+
+  .dark & {
+    color: color.alpha(colors.$white, 0.87);
+  }
+
+  .active.light & {
+    color: #1976D2;
+  }
+
+  .active.dark & {
+    color: #42A5F5;
+  }
+}
+
+.turnCounter {
+  @include font.apply(fonts.$mono, (
+    font-size: 12px,
+    font-weight: 500,
+  ));
+  @include spacing.padding($x: 8px, $y: 2px);
+  border-radius: 8px;
+  @include transition.apply(background-color, color);
+
+  .light & {
+    background-color: color.alpha(#1976D2, 0.12);
+    color: #1565C0;
+  }
+
+  .dark & {
+    background-color: color.alpha(#42A5F5, 0.16);
+    color: #64B5F6;
+  }
+}
+
+.controls {
+  @include flex.row-center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toggleButton {
+  flex: 1;
+  min-width: 150px;
+}
+
+.executeButton {
+  flex: 1;
+  min-width: 120px;
+}
+
+.advanceButton {
+  min-width: 100px;
+}
+
+.resetButton {
+  min-width: 80px;
+}

@@ -34,6 +34,7 @@ import { logger } from '@showdex/utils/debug';
 import { useRandomUuid } from '@showdex/utils/hooks';
 import { buildMoveOptions, formatDamageAmounts } from '@showdex/utils/ui';
 import { useCalcdexPokeContext } from '../CalcdexPokeContext';
+import { usePlayAheadContext } from '../PlayAhead';
 import styles from './PokeMoves.module.scss';
 
 export interface PokeMovesProps {
@@ -70,7 +71,19 @@ export const PokeMoves = ({
     format,
     rules,
     field,
+    playerKey: currentPlayerKey,
+    opponentKey: currentOpponentKey,
   } = state;
+
+  // PlayAhead simulation context
+  const {
+    state: playAheadState,
+    isActive: simulationActive,
+    setOpponentMove,
+  } = usePlayAheadContext();
+
+  // Determine if this PokeMoves component is for the opponent
+  const isOpponent = player?.playerKey === currentOpponentKey;
 
   const colorScheme = useColorScheme();
   const colorTheme = useColorTheme();
@@ -556,6 +569,36 @@ export const PokeMoves = ({
             </div>
           </TableGridItem>
         </>
+      )}
+
+      {/* Opponent Move Selection for Play Ahead */}
+      {simulationActive && isOpponent && (
+        <TableGridItem
+          className={cx(styles.opponentMoveSelection)}
+          align="left"
+          span={3}
+        >
+          <div className={styles.opponentMoveLabel}>
+            {t('playAhead.opponentMove.label', 'Select Opponent Move')}
+          </div>
+          <Dropdown
+            aria-label={t('playAhead.opponentMove.aria', {
+              pokemon: friendlyPokemonName,
+            }) as React.ReactNode}
+            hint={t('playAhead.opponentMove.hint', 'Choose move for simulation') as React.ReactNode}
+            input={{
+              name: `${l.scope}:${pokemonKey}:OpponentMove`,
+              value: playAheadState?.opponentMove || null,
+              onChange: (name: MoveName) => setOpponentMove(name, `${l.scope}:OpponentMoveDropdown`),
+            }}
+            options={moveOptions.flatMap((group) =>
+              Array.isArray(group.options) ? group.options : [group]
+            ).filter((opt) => pokemon?.moves?.includes(opt.value as MoveName))}
+            noOptionsMessage={t('playAhead.opponentMove.empty', 'No moves available') as React.ReactNode}
+            filterOption={moveOptionsFilter}
+            disabled={!pokemon?.speciesForme}
+          />
+        </TableGridItem>
       )}
 
       {/* (actual) moves */}

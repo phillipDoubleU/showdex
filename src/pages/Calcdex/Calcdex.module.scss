@@ -237,3 +237,11 @@ div.mobileCloseButton {
     color: inherit;
   }
 }
+
+.playAheadControls {
+  @include spacing.margin($y: 12px);
+}
+
+.simulationResult {
+  // SimulationResult component has its own bottom margin
+}

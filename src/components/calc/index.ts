@@ -7,6 +7,7 @@ export * from './FieldCalc';
 export * from './PlayerCalc';
 export * from './PlayerInfo';
 export * from './PlayerPiconButton';
+export * from './PlayAhead';
 export * from './PokeCalc';
 export * from './PokeInfo';
 export * from './PokeMoves';
