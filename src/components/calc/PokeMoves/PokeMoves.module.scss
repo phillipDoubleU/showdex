@@ -349,3 +349,40 @@ button.editorButton {
   letter-spacing: 0.25px;
   opacity: 0.64;
 }
+
+// PlayAhead Opponent Move Selection
+.opponentMoveSelection {
+  @include flex.column;
+  @include spacing.padding($all: 12px, $bottom: 8px);
+  @include spacing.margin($bottom: 4px);
+  gap: 6px;
+  border-radius: 8px;
+  @include transition.apply(background-color, border-color);
+
+  .light & {
+    background-color: color.alpha(#E3F2FD, 0.48);
+    border: 1px solid color.alpha(#1976D2, 0.24);
+  }
+
+  .dark & {
+    background-color: color.alpha(#0D47A1, 0.24);
+    border: 1px solid color.alpha(#42A5F5, 0.32);
+  }
+}
+
+.opponentMoveLabel {
+  @include font.apply(fonts.$primary, (
+    font-size: 12px,
+    font-weight: 600,
+  ));
+  text-transform: uppercase;
+  @include transition.apply(color);
+
+  .light & {
+    color: #1565C0;
+  }
+
+  .dark & {
+    color: #64B5F6;
+  }
+}

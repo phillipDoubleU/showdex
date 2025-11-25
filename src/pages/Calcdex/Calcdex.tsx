@@ -7,6 +7,9 @@ import {
   CloseButton,
   FieldCalc,
   PlayerCalc,
+  PlayAheadProvider,
+  PlayAheadControls,
+  SimulationResult,
   useCalcdexContext,
   useCalcdexSize,
 } from '@showdex/components/calc';
@@ -165,68 +168,74 @@ export const Calcdex = ({
         })}
       >
         <Scrollable className={styles.content}>
-          <BuildInfo
-            position="top-right"
-          />
-
-          {
-            (renderAsOverlay && !mobile) &&
-            <BaseButton
-              className={styles.overlayCloseButton}
-              display="block"
-              aria-label="Close Calcdex"
-              onPress={onCloseOverlay}
-            >
-              <i className="fa fa-close" />
-            </BaseButton>
-          }
-
-          {
-            (renderAsOverlay && mobile) &&
-            <CloseButton
-              className={cx(styles.mobileCloseButton, styles.top)}
-              onPress={onCloseOverlay}
+          <PlayAheadProvider battleId={battleId}>
+            <BuildInfo
+              position="top-right"
             />
-          }
 
-          <PiconRackSortableContext playerKey={topKey}>
-            <PlayerCalc
-              className={styles.playerCalc}
-              position="top"
+            {
+              (renderAsOverlay && !mobile) &&
+              <BaseButton
+                className={styles.overlayCloseButton}
+                display="block"
+                aria-label="Close Calcdex"
+                onPress={onCloseOverlay}
+              >
+                <i className="fa fa-close" />
+              </BaseButton>
+            }
+
+            {
+              (renderAsOverlay && mobile) &&
+              <CloseButton
+                className={cx(styles.mobileCloseButton, styles.top)}
+                onPress={onCloseOverlay}
+              />
+            }
+
+            <PiconRackSortableContext playerKey={topKey}>
+              <PlayerCalc
+                className={styles.playerCalc}
+                position="top"
+                playerKey={topKey}
+                defaultName={t('player.user.defaultName', { index: 1 })}
+                playerOptions={playerOptions}
+                mobile={mobile}
+              />
+            </PiconRackSortableContext>
+
+            <FieldCalc
+              className={cx(
+                styles.fieldCalc,
+                (settings?.expandFieldControls || state?.gameType === 'Doubles') && styles.expanded,
+              )}
               playerKey={topKey}
-              defaultName={t('player.user.defaultName', { index: 1 })}
-              playerOptions={playerOptions}
-              mobile={mobile}
+              opponentKey={bottomKey}
             />
-          </PiconRackSortableContext>
 
-          <FieldCalc
-            className={cx(
-              styles.fieldCalc,
-              (settings?.expandFieldControls || state?.gameType === 'Doubles') && styles.expanded,
-            )}
-            playerKey={topKey}
-            opponentKey={bottomKey}
-          />
+            <PlayAheadControls className={styles.playAheadControls} />
 
-          <PiconRackSortableContext playerKey={bottomKey}>
-            <PlayerCalc
-              className={styles.opponentCalc}
-              position="bottom"
-              playerKey={bottomKey}
-              defaultName={t('player.user.defaultName', { index: 2 })}
-              playerOptions={playerOptions}
-              mobile={mobile}
-            />
-          </PiconRackSortableContext>
+            <SimulationResult className={styles.simulationResult} />
 
-          {
-            (renderAsOverlay && mobile) &&
-            <CloseButton
-              className={cx(styles.mobileCloseButton, styles.bottom)}
-              onPress={onCloseOverlay}
-            />
-          }
+            <PiconRackSortableContext playerKey={bottomKey}>
+              <PlayerCalc
+                className={styles.opponentCalc}
+                position="bottom"
+                playerKey={bottomKey}
+                defaultName={t('player.user.defaultName', { index: 2 })}
+                playerOptions={playerOptions}
+                mobile={mobile}
+              />
+            </PiconRackSortableContext>
+
+            {
+              (renderAsOverlay && mobile) &&
+              <CloseButton
+                className={cx(styles.mobileCloseButton, styles.bottom)}
+                onPress={onCloseOverlay}
+              />
+            }
+          </PlayAheadProvider>
         </Scrollable>
       </div>
 

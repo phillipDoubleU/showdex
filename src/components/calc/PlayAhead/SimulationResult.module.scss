@@ -1,0 +1,241 @@
+@use 'config/colors';
+@use 'config/fonts';
+@use 'functions/color';
+@use 'mixins/flex';
+@use 'mixins/font';
+@use 'mixins/spacing';
+@use 'mixins/transition';
+
+.container {
+  @include flex.column;
+  @include spacing.padding($all: 12px);
+  @include spacing.margin($bottom: 12px);
+  border-radius: 12px;
+  @include transition.apply(background-color, box-shadow);
+
+  &.light {
+    background-color: color.alpha(colors.$white, 0.56);
+    box-shadow: (
+      0 0 1px color.alpha(colors.$black, 0.16),
+      0 0 12px color.alpha(colors.$gray-dark, 0.12),
+    );
+  }
+
+  &.dark {
+    background-color: color.alpha(colors.$gray-darkest, 0.72);
+    box-shadow: (
+      0 0 1px color.alpha(colors.$white, 0.28),
+      0 0 12px color.alpha(colors.$black, 0.36),
+    );
+  }
+}
+
+.header {
+  @include font.apply(fonts.$primary, (
+    font-size: 14px,
+    font-weight: 600,
+  ));
+  @include spacing.margin($bottom: 10px);
+  @include transition.apply(color);
+
+  .light & {
+    color: color.alpha(colors.$black, 0.87);
+  }
+
+  .dark & {
+    color: color.alpha(colors.$white, 0.87);
+  }
+}
+
+.results {
+  @include flex.column;
+  gap: 8px;
+}
+
+.moveResult {
+  @include flex.column;
+  @include spacing.padding($all: 10px);
+  border-radius: 8px;
+  gap: 6px;
+  @include transition.apply(background-color, border-color);
+
+  .light & {
+    background-color: color.alpha(colors.$white, 0.72);
+    border: 1px solid color.alpha(colors.$gray-dark, 0.16);
+  }
+
+  .dark & {
+    background-color: color.alpha(colors.$black, 0.32);
+    border: 1px solid color.alpha(colors.$gray-light, 0.16);
+  }
+
+  &.fainted {
+    .light & {
+      background-color: color.alpha(#FFEBEE, 0.72);
+      border-color: color.alpha(#D32F2F, 0.32);
+    }
+
+    .dark & {
+      background-color: color.alpha(#B71C1C, 0.24);
+      border-color: color.alpha(#EF5350, 0.48);
+    }
+  }
+
+  &.error {
+    .light & {
+      background-color: color.alpha(#FFF3E0, 0.72);
+      border-color: color.alpha(#F57C00, 0.32);
+    }
+
+    .dark & {
+      background-color: color.alpha(#E65100, 0.24);
+      border-color: color.alpha(#FF9800, 0.48);
+    }
+  }
+}
+
+.moveHeader {
+  @include flex.row($align: center);
+  gap: 8px;
+}
+
+.playerLabel {
+  @include font.apply(fonts.$mono, (
+    font-size: 10px,
+    font-weight: 600,
+  ));
+  @include spacing.padding($x: 6px, $y: 2px);
+  border-radius: 4px;
+  text-transform: uppercase;
+  @include transition.apply(background-color, color);
+
+  .light & {
+    background-color: color.alpha(colors.$black, 0.08);
+    color: color.alpha(colors.$black, 0.72);
+  }
+
+  .dark & {
+    background-color: color.alpha(colors.$white, 0.12);
+    color: color.alpha(colors.$white, 0.72);
+  }
+}
+
+.moveName {
+  @include font.apply(fonts.$primary, (
+    font-size: 13px,
+    font-weight: 600,
+  ));
+  @include transition.apply(color);
+
+  .light & {
+    color: color.alpha(colors.$black, 0.87);
+  }
+
+  .dark & {
+    color: color.alpha(colors.$white, 0.87);
+  }
+}
+
+.description {
+  @include font.apply(fonts.$primary, (
+    font-size: 12px,
+    font-weight: 400,
+  ));
+  line-height: 1.4;
+  @include transition.apply(color);
+
+  .light & {
+    color: color.alpha(colors.$black, 0.72);
+  }
+
+  .dark & {
+    color: color.alpha(colors.$white, 0.72);
+  }
+}
+
+.status {
+  @include font.apply(fonts.$primary, (
+    font-size: 11px,
+    font-weight: 600,
+  ));
+  @include spacing.padding($x: 6px, $y: 3px);
+  border-radius: 4px;
+  text-transform: uppercase;
+  width: fit-content;
+  @include transition.apply(background-color, color);
+
+  &.ko {
+    .light & {
+      background-color: color.alpha(#D32F2F, 0.16);
+      color: #C62828;
+    }
+
+    .dark & {
+      background-color: color.alpha(#EF5350, 0.24);
+      color: #EF9A9A;
+    }
+  }
+
+  &.errorText {
+    .light & {
+      background-color: color.alpha(#F57C00, 0.16);
+      color: #E65100;
+    }
+
+    .dark & {
+      background-color: color.alpha(#FF9800, 0.24);
+      color: #FFB74D;
+    }
+  }
+}
+
+.globalErrors {
+  @include flex.column;
+  @include spacing.margin($top: 12px);
+  @include spacing.padding($all: 10px);
+  border-radius: 8px;
+  gap: 6px;
+  @include transition.apply(background-color);
+
+  .light & {
+    background-color: color.alpha(#FFF3E0, 0.64);
+  }
+
+  .dark & {
+    background-color: color.alpha(#E65100, 0.16);
+  }
+}
+
+.errorHeader {
+  @include font.apply(fonts.$primary, (
+    font-size: 12px,
+    font-weight: 600,
+  ));
+  text-transform: uppercase;
+  @include transition.apply(color);
+
+  .light & {
+    color: #E65100;
+  }
+
+  .dark & {
+    color: #FFB74D;
+  }
+}
+
+.errorText {
+  @include font.apply(fonts.$mono, (
+    font-size: 11px,
+    font-weight: 400,
+  ));
+  line-height: 1.4;
+  @include transition.apply(color);
+
+  .light & {
+    color: color.alpha(#E65100, 0.87);
+  }
+
+  .dark & {
+    color: color.alpha(#FFB74D, 0.87);
+  }
+}
