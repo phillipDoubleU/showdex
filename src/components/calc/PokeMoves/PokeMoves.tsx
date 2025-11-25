@@ -53,6 +53,7 @@ export const PokeMoves = ({
   const {
     state,
     settings,
+    playerKey: contextPlayerKey,
     player,
     playerPokemon: pokemon,
     opponentPokemon,
@@ -83,7 +84,7 @@ export const PokeMoves = ({
   } = usePlayAheadContext();
 
   // Determine if this PokeMoves component is for the opponent
-  const isOpponent = player?.playerKey === currentOpponentKey;
+  const isOpponent = contextPlayerKey === currentOpponentKey;
 
   const colorScheme = useColorScheme();
   const colorTheme = useColorTheme();
